@@ -1,3 +1,6 @@
+### Testing and practicing using the Git and GitHub phase of the project.
+This section added Aug 10, 2014 at 3:12 PM EDT. 
+
 ## Introduction
 
 It is now possible to collect a large amount of data about personal
