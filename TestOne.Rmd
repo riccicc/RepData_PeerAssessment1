@@ -1,0 +1,30 @@
+---
+title: "TestOne"
+output: html_document
+---
+Testing the steps for the complete process. 
+```{r, echo=TRUE}
+setwd("C:/Users/ric/RepData_PA1")
+getwd()
+```
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+Test Unordered List: 
+- Item One Test
+- Item Two Test
+Ordered List: 
+1. test order one
+2. test order two
+
+This is another test. 
