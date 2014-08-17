@@ -1,0 +1,101 @@
+---
+title: "Reproductible Reseach: Peer Assessment 1"
+author: "Ric"
+date: "Saturday, August 16, 2014"
+output: html_document
+---
+
+## Introduction
+
+This is the first peer assessment for the Reproducible Research course from John Hopkins University, via coursera.  This assignment combines the tools of R programming, data analysis, knitr, git, gitHub, and other tools learned through the first five courses in this Data Science certificate 
+program.    
+
+All the R code and results will be displayed.   
+
+Each section in this assignment will be defined by a heading.  
+
+## Loading and preprocessing the data
+
+For this first section, we are to show how the raw code was imported into R for analysis and 
+the steps proformed.  
+
+The assumption is the raw csv file is in the working directory.  
+
+```{r preprocess, echo=TRUE}
+setwd("C:/Users/ric/RepData_PA1")
+getwd() ## check working directory has been set. 
+activityDataRaw <- read.csv("activity.csv")  ## read data into R dataframe. 
+```
+==============================  
+Begin data file inspection  
+==============================    
+```{r}
+str(activityDataRaw) ## inspect structure of data
+summary(activityDataRaw)
+head(activityDataRaw)  ## display first few rows of data
+tail(activityDataRaw)  ## display last rows of data
+sum(is.na(activityDataRaw$steps)) #  determine number of NA values (which is also seen in the summary)
+```
+
+```{r}
+plot(activityDataRaw$date, activityDataRaw$steps)  ## quick look at two variables
+```  
+
+This completes the preprocessing section of this assignment.  
+
+
+## What is the mean total number of steps taken per day?    
+
+In this section of the assignment, the missing values (NA) observations are removed from the dataset.   
+
+```{r}
+activityData <- subset(na.omit(activityDataRaw))  ## build new dataset without NA values. 
+head(activityData)  ## check first few rows.  
+```   
+
+Earlier, it was determined that there were 2304 NA observations in the original dataset of 17,568 observations.  Therefore, an arithmetic calculation shows that 13 percent of the original dataset has been removed.  
+
+```{r}
+2304/17568*100
+```   
+===================================================================   
+Will now build a historgram of the total number of steps taken each day.  
+===================================================================  
+Calculate the total steps taken per day: 
+
+```{r}
+totalSteps <- tapply(activityData$steps, activityData$date, sum)  ## find the total steps count.
+head(totalSteps)  ## show some of the data
+```     
+
+NA values have reappeared; therefore, the data will be sorted to move the NA values to the bottom and then removed:   
+
+```{r}
+totalStepsSorted <- sort(totalSteps, na.last=TRUE)  ## sort and move NA values to last
+totalStepsData <- totalStepsSorted[c(1:53)]
+```    
+
+The resulting data:   
+
+```{r}
+totalStepsData  
+```   
+
+With this information, a basic historgram can be constructed:   
+
+```{r}
+hist(totalStepsData, breaks=20, xlab="Total number of steps taken", 
+     main="Histogram of Total Steps Taken Each Day")   
+```    
+
+The **mean** and **median** of the total number of steps taken per day can be calculated with the R summary() function:    
+
+```{r}
+summary(totalStepsData)
+```    
+
+The mean is sometimes referred to as the average number, and the median is the number between the minimum and maximum values of the quantile.      
+
+*****   
+## What is the average daily activity pattern?    
+
